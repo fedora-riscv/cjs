@@ -1,8 +1,8 @@
-%global _internal_version  fb472ad
+%global _internal_version  a30f982
 
 Name:          cjs
 Version:       1.34.0
-Release:       0.4.git%{_internal_version}%{?dist}
+Release:       0.5.git%{_internal_version}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -78,12 +78,13 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %files devel
 %doc examples/*
 %{_includedir}/cjs-1.0/
-%{_libdir}/pkgconfig/cjs-1.0.pc
-%{_libdir}/pkgconfig/cjs-dbus-1.0.pc
-%{_libdir}/pkgconfig/cjs-internals-1.0.pc
+%{_libdir}/pkgconfig/cjs-*1.0.pc
 %{_libdir}/*.so
 
 %changelog
+* Sun Sep 15 2013 Leigh Scott <leigh123linux@googlemail.com> - 1.34.0-0.5.gita30f982
+- update to latest git
+
 * Thu Aug 22 2013 Leigh Scott <leigh123linux@googlemail.com> - 1.34.0-0.4.gitfb472ad
 - rebuilt
 
