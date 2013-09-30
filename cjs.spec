@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       1.9.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -39,7 +39,7 @@ framework.
 %package devel
 Summary: Development package for %{name}
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description devel
 Files for development with %{name}.
@@ -85,6 +85,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Mon Sep 30 2013 Leigh Scott <leigh123linux@googlemail.com> - 1:1.9.1-2
+- add epoch to -devel
+
 * Mon Sep 30 2013 Leigh Scott <leigh123linux@googlemail.com> - 1:1.9.1-1
 - update to 1.9.1
 - add epoch
