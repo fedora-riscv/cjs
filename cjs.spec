@@ -2,8 +2,8 @@
 
 Name:          cjs
 Epoch:         1
-Version:       1.9.1
-Release:       2%{?dist}
+Version:       2.0.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -85,6 +85,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Wed Oct 02 2013 Leigh Scott <leigh123linux@googlemail.com> - 1:2.0.0-1
+- update to 2.0.0
+
 * Mon Sep 30 2013 Leigh Scott <leigh123linux@googlemail.com> - 1:1.9.1-2
 - add epoch to -devel
 
