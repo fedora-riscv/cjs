@@ -21,11 +21,11 @@ URL:           http://cinnamon.linuxmint.com
 Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
 
-BuildRequires: js-devel
-BuildRequires: cairo-gobject-devel
-BuildRequires: gobject-introspection-devel >= 1.31.22
+BuildRequires: pkgconfig(libjs)
+BuildRequires: pkgconfig(cairo-gobject)
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.31.22
 BuildRequires: readline-devel
-BuildRequires: dbus-glib-devel
+BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: intltool
 # Bootstrap requirements
 BuildRequires: gtk-doc
@@ -48,15 +48,12 @@ Files for development with %{name}.
 %setup -q
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
+NOCONFIGURE=1 ./autogen.sh
 
-rm -f configure
 
 %build
-(if ! test -x configure; then NOCONFIGURE=1 ./autogen.sh; fi;
- %configure --disable-static)
-
+%configure --disable-static
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
-
 make %{?_smp_mflags} V=1
 
 %install
