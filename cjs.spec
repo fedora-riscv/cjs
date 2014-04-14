@@ -2,7 +2,7 @@
 
 Name:          cjs
 Epoch:         1
-Version:       2.0.0
+Version:       2.2.0
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -82,6 +82,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Sat Apr 12 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.2.0-1
+- update to 2.2.0
+
 * Wed Oct 02 2013 Leigh Scott <leigh123linux@googlemail.com> - 1:2.0.0-1
 - update to 2.0.0
 
