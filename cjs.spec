@@ -29,6 +29,8 @@ BuildRequires: readline-devel
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: intltool
+# Require for checks
+BuildRequires: dbus-x11
 # Bootstrap requirements
 BuildRequires: gtk-doc
 BuildRequires: gnome-common
