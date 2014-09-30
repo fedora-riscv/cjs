@@ -20,6 +20,7 @@ URL:           http://cinnamon.linuxmint.com
 Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.git%{_internal_version}.tar.gz
 #Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
+Patch0:         0001-rename.patch
 
 BuildRequires: pkgconfig(mozjs-24)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -44,15 +45,25 @@ Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 %description devel
 Files for development with %{name}.
 
+%package tests
+Summary: Tests for the cjs package
+Group: Development/Libraries
+Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
+
+%description tests
+The cjs-tests package contains tests that can be used to verify
+the functionality of the installed cjs package.
+
 %prep
 %setup -q -n linuxmint-cjs-%{_internal_version}
+%patch0 -p1
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
 NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure --disable-static
+%configure --disable-static --enable-installed-tests
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 make %{?_smp_mflags} V=1
 
@@ -72,14 +83,16 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_bindir}/cjs-console
 %{_libdir}/*.so.*
 %{_libdir}/cjs/
-%{_libdir}/cjs-1.0/
-%{_datadir}/cjs-1.0/
 
 %files devel
 %doc examples/*
 %{_includedir}/cjs-1.0/
 %{_libdir}/pkgconfig/cjs-*1.0.pc
 %{_libdir}/*.so
+
+%files tests
+%{_libexecdir}/cjs/installed-tests/
+%{_datadir}/installed-tests/
 
 %changelog
 * Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.1.git7a65cc7
