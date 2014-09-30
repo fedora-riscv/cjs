@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       2.4.0
-Release:       0.1.git%{_internal_version}%{?dist}
+Release:       0.2.git%{_internal_version}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -27,6 +27,7 @@ BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.39.3
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: intltool
 # Bootstrap requirements
 BuildRequires: gtk-doc
@@ -95,6 +96,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.2.git7a65cc7
+- add build requires gtk3-devel
+
 * Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.1.git7a65cc7
 - update to latest git
 - swap to mozjs24
