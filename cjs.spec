@@ -92,7 +92,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %files tests
 %{_libexecdir}/cjs/
-%{_datadir}/installed-tests/cjs/
+%{_datadir}/installed-tests/
 
 %changelog
 * Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.1.git7a65cc7
