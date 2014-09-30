@@ -1,9 +1,9 @@
-#global _internal_version  a30f982
+%global _internal_version  7a65cc7
 
 Name:          cjs
 Epoch:         1
-Version:       2.2.2
-Release:       2%{?dist}
+Version:       2.4.0
+Release:       0.1.git%{_internal_version}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -17,13 +17,13 @@ URL:           http://cinnamon.linuxmint.com
 # wget https://github.com/linuxmint/cjs/archive/%%{version}.tar.gz -O cjs-%%{version}.tar.gz
 # for git
 # wget https://github.com/linuxmint/cjs/tarball/%%{_internal_version} -O cjs-%%{version}.git%%{_internal_version}.tar.gz
-#Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.git%{_internal_version}.tar.gz
-Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
+Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.git%{_internal_version}.tar.gz
+#Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
 
-BuildRequires: pkgconfig(libjs)
+BuildRequires: pkgconfig(mozjs-24)
 BuildRequires: pkgconfig(cairo-gobject)
-BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.31.22
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.39.3
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: intltool
@@ -45,7 +45,7 @@ Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 Files for development with %{name}.
 
 %prep
-%setup -q
+%setup -q -n linuxmint-cjs-%{_internal_version}
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
 NOCONFIGURE=1 ./autogen.sh
@@ -82,6 +82,10 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %changelog
+* Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.1.git7a65cc7
+- update to latest git
+- swap to mozjs24
+
 * Sat Aug 16 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.2.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_22_Mass_Rebuild
 
