@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       2.4.0
-Release:       0.2.git%{_internal_version}%{?dist}
+Release:       0.3.git%{_internal_version}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -74,6 +74,9 @@ make %{?_smp_mflags} V=1
 #Remove libtool archives.
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
+%check
+make check
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
@@ -96,6 +99,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.3.git7a65cc7
+- add check section to spec
+
 * Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.2.git7a65cc7
 - add build requires gtk3-devel
 
