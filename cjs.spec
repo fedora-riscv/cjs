@@ -91,7 +91,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 
 %files tests
-%{_libexecdir}/cjs/installed-tests/
+%{_libexecdir}/cjs/
 %{_datadir}/installed-tests/cjs/
 
 %changelog
