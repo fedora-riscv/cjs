@@ -1,9 +1,9 @@
-%global _internal_version  7a65cc7
+#global _internal_version  7a65cc7
 
 Name:          cjs
 Epoch:         1
 Version:       2.4.0
-Release:       0.3.git%{_internal_version}%{?dist}
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -17,10 +17,9 @@ URL:           http://cinnamon.linuxmint.com
 # wget https://github.com/linuxmint/cjs/archive/%%{version}.tar.gz -O cjs-%%{version}.tar.gz
 # for git
 # wget https://github.com/linuxmint/cjs/tarball/%%{_internal_version} -O cjs-%%{version}.git%%{_internal_version}.tar.gz
-Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.git%{_internal_version}.tar.gz
-#Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
+#Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%%{version}.git%%{_internal_version}.tar.gz
+Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
-Patch0:         0001-rename.patch
 
 BuildRequires: pkgconfig(mozjs-24)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -58,8 +57,7 @@ The cjs-tests package contains tests that can be used to verify
 the functionality of the installed cjs package.
 
 %prep
-%setup -q -n linuxmint-cjs-%{_internal_version}
-%patch0 -p1
+%setup -q
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
 NOCONFIGURE=1 ./autogen.sh
@@ -101,6 +99,9 @@ make check
 %{_datadir}/installed-tests/
 
 %changelog
+* Thu Oct 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-1
+- update to 2.4.0
+
 * Tue Sep 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-0.3.git7a65cc7
 - add check section to spec
 
