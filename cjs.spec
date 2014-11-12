@@ -20,10 +20,11 @@ URL:           http://cinnamon.linuxmint.com
 #Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%%{version}.git%%{_internal_version}.tar.gz
 Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
+Patch0:        0001-Lower-gobject-introspection-requirement-to-1.38.0.patch
 
 BuildRequires: pkgconfig(mozjs-24)
 BuildRequires: pkgconfig(cairo-gobject)
-BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.39.3
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
 BuildRequires: readline-devel
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gtk+-3.0)
@@ -58,6 +59,7 @@ the functionality of the installed cjs package.
 
 %prep
 %setup -q
+%patch0 -p1
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
 NOCONFIGURE=1 ./autogen.sh
