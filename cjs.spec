@@ -2,7 +2,7 @@
 
 Name:          cjs
 Epoch:         1
-Version:       2.4.0
+Version:       2.4.1
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -20,7 +20,6 @@ URL:           http://cinnamon.linuxmint.com
 #Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%%{version}.git%%{_internal_version}.tar.gz
 Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
 
-Patch0:        0001-Lower-gobject-introspection-requirement-to-1.38.0.patch
 
 BuildRequires: pkgconfig(mozjs-24)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -51,7 +50,7 @@ Files for development with %{name}.
 %package tests
 Summary: Tests for the cjs package
 Group: Development/Libraries
-Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
+Requires: %{name}-devel%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description tests
 The cjs-tests package contains tests that can be used to verify
@@ -59,7 +58,6 @@ the functionality of the installed cjs package.
 
 %prep
 %setup -q
-%patch0 -p1
 sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
 echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
 NOCONFIGURE=1 ./autogen.sh
@@ -89,18 +87,25 @@ make check
 %{_bindir}/cjs-console
 %{_libdir}/*.so.*
 %{_libdir}/cjs/
+%exclude %{_libdir}/cjs/*.so
 
 %files devel
 %doc examples/*
 %{_includedir}/cjs-1.0/
 %{_libdir}/pkgconfig/cjs-*1.0.pc
 %{_libdir}/*.so
+%{_libdir}/cjs/*.so
 
 %files tests
 %{_libexecdir}/cjs/
 %{_datadir}/installed-tests/
 
 %changelog
+* Sun Nov 23 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.1-1
+- update to 2.4.1
+- move .so files to -devel sub-package
+- change requires for -tests sub-package
+
 * Thu Oct 30 2014 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.0-1
 - update to 2.4.0
 
