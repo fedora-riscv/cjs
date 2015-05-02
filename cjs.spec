@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       2.4.2
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -101,6 +101,9 @@ make check
 %{_datadir}/installed-tests/
 
 %changelog
+* Sat May 02 2015 Kalev Lember <kalevlember@gmail.com> - 1:2.4.2-2
+- Rebuilt for GCC 5 C++11 ABI change
+
 * Tue Mar 31 2015 Leigh Scott <leigh123linux@googlemail.com> - 1:2.4.2-1
 - update to 2.4.2
 
