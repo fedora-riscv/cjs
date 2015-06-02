@@ -82,7 +82,8 @@ make check
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING COPYING.LGPL NEWS README
+%doc NEWS README
+%license COPYING COPYING.LGPL
 %{_bindir}/cjs
 %{_bindir}/cjs-console
 %{_libdir}/*.so.*
