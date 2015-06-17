@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       2.6.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -102,6 +102,9 @@ make check
 %{_datadir}/installed-tests/
 
 %changelog
+* Wed Jun 17 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1:2.6.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Wed May 20 2015 Leigh Scott <leigh123linux@googlemail.com> - 1:2.6.0-1
 - update to 2.6.0 release
 
