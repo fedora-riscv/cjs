@@ -2,8 +2,8 @@
 
 Name:          cjs
 Epoch:         1
-Version:       2.8.0
-Release:       3%{?dist}
+Version:       3.0.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -31,7 +31,7 @@ BuildRequires: intltool
 # Require for checks
 BuildRequires: dbus-x11
 # Bootstrap requirements
-BuildRequires: gtk-doc
+BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: gnome-common
 
 %description
@@ -102,6 +102,9 @@ make check
 %{_datadir}/installed-tests/
 
 %changelog
+* Sat Apr 23 2016 Leigh Scott <leigh123linux@googlemail.com> - 1:3.0.0-1
+- update to 3.0.0 release
+
 * Wed Feb 03 2016 Fedora Release Engineering <releng@fedoraproject.org> - 1:2.8.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_24_Mass_Rebuild
 
