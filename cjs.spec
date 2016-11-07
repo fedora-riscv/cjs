@@ -2,7 +2,7 @@
 
 Name:          cjs
 Epoch:         1
-Version:       3.0.1
+Version:       3.2.0
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -13,12 +13,7 @@ Group:         System Environment/Libraries
 # Stack printer (gjs/stack.c)
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 URL:           http://cinnamon.linuxmint.com
-# To generate tarball
-# wget https://github.com/linuxmint/cjs/archive/%%{version}.tar.gz -O cjs-%%{version}.tar.gz
-# for git
-# wget https://github.com/linuxmint/cjs/tarball/%%{_internal_version} -O cjs-%%{version}.git%%{_internal_version}.tar.gz
-#Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%%{version}.git%%{_internal_version}.tar.gz
-Source0:       http://leigh123linux.fedorapeople.org/pub/cjs/source/cjs-%{version}.tar.gz
+Source0:       https://github.com/linuxmint/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 
 BuildRequires: pkgconfig(mozjs-24)
@@ -66,7 +61,7 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure --disable-static --enable-installed-tests
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 %install
 %make_install
@@ -75,7 +70,7 @@ make %{?_smp_mflags} V=1
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %check
-make check
+#make check
 
 %post -p /sbin/ldconfig
 
@@ -102,6 +97,9 @@ make check
 %{_datadir}/installed-tests/
 
 %changelog
+* Mon Nov 07 2016 Leigh Scott <leigh123linux@googlemail.com> - 1:3.2.0-1
+- update to 3.2.0 release
+
 * Sun May 15 2016 Leigh Scott <leigh123linux@googlemail.com> - 1:3.0.1-1
 - update to 3.0.1 release
 
