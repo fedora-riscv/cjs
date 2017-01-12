@@ -3,7 +3,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.2.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 Group:         System Environment/Libraries
@@ -97,6 +97,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Thu Jan 12 2017 Igor Gnatenko <ignatenko@redhat.com> - 1:3.2.0-2
+- Rebuild for readline 7.x
+
 * Mon Nov 07 2016 Leigh Scott <leigh123linux@googlemail.com> - 1:3.2.0-1
 - update to 3.2.0 release
 
