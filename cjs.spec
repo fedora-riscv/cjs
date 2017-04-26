@@ -1,22 +1,24 @@
-#global _internal_version  5821be5
+%global commit  16347ea571e826bd831cb166a5866d86ca59aa7a
+%global date 20170426
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
 Name:          cjs
 Epoch:         1
-Version:       3.2.0
-Release:       3%{?dist}
+Version:       3.4.0
+Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
-Group:         System Environment/Libraries
+License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The following files contain code from Mozilla which
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
-License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
-URL:           http://cinnamon.linuxmint.com
-Source0:       https://github.com/linuxmint/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL:            https://github.com/linuxmint
+#Source0:        %%url/%%{name}/archive/%%{version}.tar.gz#/%%{name}-%%{version}.tar.gz
+Source0:        %url/%{name}/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
 
 
-BuildRequires: pkgconfig(mozjs-24)
+BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
 BuildRequires: readline-devel
@@ -24,7 +26,8 @@ BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(gtk+-3.0)
 BuildRequires: intltool
 # Require for checks
-BuildRequires: dbus-x11
+#BuildRequires: dbus-x11
+#BuildRequires: xorg-x11-server-Xvfb
 # Bootstrap requirements
 BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: gnome-common
@@ -36,7 +39,6 @@ framework.
 
 %package devel
 Summary: Development package for %{name}
-Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description devel
@@ -44,7 +46,6 @@ Files for development with %{name}.
 
 %package tests
 Summary: Tests for the cjs package
-Group: Development/Libraries
 Requires: %{name}-devel%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description tests
@@ -52,14 +53,14 @@ The cjs-tests package contains tests that can be used to verify
 the functionality of the installed cjs package.
 
 %prep
-%setup -q
-sed -i -e 's@{ACLOCAL_FLAGS}@{ACLOCAL_FLAGS} -I m4@g' Makefile.am
-echo "AC_CONFIG_MACRO_DIR([m4])" >> configure.ac
+%autosetup -p1 -n %{name}-%{commit}
 NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure --disable-static --enable-installed-tests
+%configure --disable-static \
+           --enable-installed-tests
+           
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build V=1
 
@@ -97,6 +98,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Wed Apr 26 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.0-0.1.20170426git16347ea
+- update to git snapshot
+
 * Fri Feb 10 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1:3.2.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_26_Mass_Rebuild
 
