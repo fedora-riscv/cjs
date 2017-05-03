@@ -1,11 +1,7 @@
-%global commit  16347ea571e826bd831cb166a5866d86ca59aa7a
-%global date 20170426
-%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
-
 Name:          cjs
 Epoch:         1
 Version:       3.4.0
-Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -14,8 +10,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 URL:            https://github.com/linuxmint
-#Source0:        %%url/%%{name}/archive/%%{version}.tar.gz#/%%{name}-%%{version}.tar.gz
-Source0:        %url/%{name}/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
+Source0:        %url/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 
 BuildRequires: pkgconfig(mozjs-38)
@@ -53,7 +48,7 @@ The cjs-tests package contains tests that can be used to verify
 the functionality of the installed cjs package.
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -p1
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -98,6 +93,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Wed May 03 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.0-1
+- update to 3.4.0 release
+
 * Wed Apr 26 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.0-0.1.20170426git16347ea
 - update to git snapshot
 
