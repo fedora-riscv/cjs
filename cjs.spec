@@ -1,6 +1,6 @@
 Name:          cjs
 Epoch:         1
-Version:       3.4.0
+Version:       3.4.1
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -93,6 +93,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_datadir}/installed-tests/
 
 %changelog
+* Tue May 23 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.1-1
+- update to 3.4.1 release
+
 * Wed May 03 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.0-1
 - update to 3.4.0 release
 
