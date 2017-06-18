@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.1
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -9,9 +9,12 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # is triple licensed under MPL1.1/LGPLv2+/GPLv2+:
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
-URL:            https://github.com/linuxmint
-Source0:        %url/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL:            https://github.com/linuxmint/%{name}
+Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
+#Patches from upstream.
+Patch0:         %{url}/commit/c7cb693a4e91b05f8ccd8237307f16e1923f7be6.patch#/%{name}-3.4.1-tweener_undefined_property_check.patch
+Patch1:         %{url}/commit/9b3d2d64315e6fda57e06e7122ec98ca85dab930.patch#/%{name}-3.4.1-tweener_silence_warnings.patch
 
 BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -32,12 +35,14 @@ Cjs allows using Cinnamon libraries from Javascript. It's based on the
 Spidermonkey Javascript engine from Mozilla and the GObject introspection
 framework.
 
+
 %package devel
 Summary: Development package for %{name}
 Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description devel
 Files for development with %{name}.
+
 
 %package tests
 Summary: Tests for the cjs package
@@ -47,6 +52,7 @@ Requires: %{name}-devel%{?_isa} = %{?epoch}:%{version}-%{release}
 The cjs-tests package contains tests that can be used to verify
 the functionality of the installed cjs package.
 
+
 %prep
 %autosetup -p1
 NOCONFIGURE=1 ./autogen.sh
@@ -55,9 +61,9 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure --disable-static \
            --enable-installed-tests
-           
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build V=1
+
 
 %install
 %make_install
@@ -65,12 +71,16 @@ sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 #Remove libtool archives.
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
+
 %check
 #make check
 
+
 %post -p /sbin/ldconfig
 
+
 %postun -p /sbin/ldconfig
+
 
 %files
 %doc NEWS README
@@ -81,6 +91,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/cjs/
 %exclude %{_libdir}/cjs/*.so
 
+
 %files devel
 %doc examples/*
 %{_includedir}/cjs-1.0/
@@ -88,11 +99,16 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/*.so
 %{_libdir}/cjs/*.so
 
+
 %files tests
 %{_libexecdir}/cjs/
 %{_datadir}/installed-tests/
 
+
 %changelog
+* Sun Jun 18 2017 Björn Esser <besser82@fedoraproject.org> - 1:3.4.1-2
+- Add patches from upstream for tweener
+
 * Tue May 23 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.1-1
 - update to 3.4.1 release
 
@@ -204,4 +220,3 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 * Sun Jul 21 2013 Leigh Scott <leigh123linux@googlemail.com> - 1.34.0-0.1.gitfb472ad
 - Inital build
-
