@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.1
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -15,6 +15,7 @@ Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 #Patches from upstream.
 Patch0:         %{url}/commit/c7cb693a4e91b05f8ccd8237307f16e1923f7be6.patch#/%{name}-3.4.1-tweener_undefined_property_check.patch
 Patch1:         %{url}/commit/9b3d2d64315e6fda57e06e7122ec98ca85dab930.patch#/%{name}-3.4.1-tweener_silence_warnings.patch
+Patch2:         %{url}/commit/48c4dd038ac0acdc79d35bb41fd84eeadda2f45a.patch#/%{name}-3.4.1-fix_needsPostBarrier_crash.patch
 
 BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -106,6 +107,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Jun 25 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.1-3
+- Fix needsPostBarrier crash (rhbz #1453008)
+
 * Sun Jun 18 2017 Björn Esser <besser82@fedoraproject.org> - 1:3.4.1-2
 - Add patches from upstream for tweener
 
