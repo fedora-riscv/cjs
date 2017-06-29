@@ -1,0 +1,45 @@
+From b66d7c2965f20c2cf51628840682c404a01bf408 Mon Sep 17 00:00:00 2001
+From: Michael Webster <miketwebster@gmail.com>
+Date: Thu, 29 Jun 2017 12:10:25 -0400
+Subject: [PATCH] object.cpp: Follow-up to 503fa20e07ce - handler ID's *must*
+ be managed from start to finish - they should be initialized to 0, and re-set
+ to 0 whenever they're finished being used.
+
+This was causing immense log spam and occasional crashes when restarting
+cinnamon.
+---
+ gi/object.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/gi/object.cpp b/gi/object.cpp
+index 5b289bfe..921a4130 100644
+--- a/gi/object.cpp
++++ b/gi/object.cpp
+@@ -1417,6 +1417,7 @@ signal_connection_invalidate_idle(void *user_data)
+ {
+     auto cd = static_cast<ConnectData *>(user_data);
+     cd->obj->signals.erase(cd);
++    cd->idle_invalidate_id = 0;
+     g_slice_free(ConnectData, cd);
+     return G_SOURCE_REMOVE;
+ }
+@@ -1465,8 +1466,10 @@ object_instance_finalize(JSFreeOp  *fop,
+          */
+         for (ConnectData *cd : priv->signals) {
+             /* First remove any pending invalidation, we are doing it now. */
+-            if (cd->idle_invalidate_id > 0)
++            if (cd->idle_invalidate_id > 0) {
+                 g_source_remove(cd->idle_invalidate_id);
++                cd->idle_invalidate_id = 0;
++            }
+ 
+             /* We also have to remove the invalidate notifier, which would
+              * otherwise schedule a new pending invalidation. */
+@@ -1665,6 +1668,7 @@ real_connect_func(JSContext *context,
+     connect_data = g_slice_new(ConnectData);
+     priv->signals.insert(connect_data);
+     connect_data->obj = priv;
++    connect_data->idle_invalidate_id = 0;
+     /* This is a weak reference, and will be cleared when the closure is invalidated */
+     connect_data->closure = closure;
+     g_closure_add_invalidate_notifier(closure, connect_data, signal_connection_invalidated);
