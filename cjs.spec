@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
-Version:       3.4.2
-Release:       2%{?dist}
+Version:       3.4.3
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -13,9 +13,6 @@ URL:            https://github.com/linuxmint/%{name}
 Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 #Patches from upstream.
-Patch0:         %{url}/commit/10805ea77109ea2d69e8b8fbf6012b7ff9de3984.patch#/%{name}-3.4.2-convert_null_strv_to_array_crash.patch
-Patch1:         %{url}/commit/b66d7c2965f20c2cf51628840682c404a01bf408.patch#/%{name}-3.4.2-manage_handler_id.patch
-
 
 BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -107,6 +104,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Jul 06 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.3-1
+- update to 3.4.3 release
+
 * Thu Jun 29 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.2-2
 - Fix log spam due to missing commit
 
