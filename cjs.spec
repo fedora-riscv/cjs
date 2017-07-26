@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.3
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -104,6 +104,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Jul 26 2017 Fedora Release Engineering <releng@fedoraproject.org> - 1:3.4.3-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_27_Mass_Rebuild
+
 * Thu Jul 06 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.3-1
 - update to 3.4.3 release
 
