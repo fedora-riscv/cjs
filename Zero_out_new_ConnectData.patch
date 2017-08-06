@@ -1,0 +1,24 @@
+From e60360bcc147357c02c70553156d277a547612e8 Mon Sep 17 00:00:00 2001
+From: Jason Hicks <jaszhix@gmail.com>
+Date: Wed, 2 Aug 2017 07:52:01 -0500
+Subject: [PATCH] object: Zero out new ConnectData
+
+Based on
+https://github.com/GNOME/gjs/commit/32c5320052d5c6eaeee400ce874e8ee7a06d9d05
+---
+ gi/object.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/gi/object.cpp b/gi/object.cpp
+index f80e9185..df00b9b7 100644
+--- a/gi/object.cpp
++++ b/gi/object.cpp
+@@ -1684,7 +1684,7 @@ real_connect_func(JSContext *context,
+     if (closure == NULL)
+         goto out;
+ 
+-    connect_data = g_slice_new(ConnectData);
++    connect_data = g_slice_new0(ConnectData);
+     priv->signals.insert(connect_data);
+     connect_data->obj = priv;
+     /* This is a weak reference, and will be cleared when the closure is invalidated */
