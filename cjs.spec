@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
-Version:       3.4.3
-Release:       4%{?dist}
+Version:       3.4.4
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -13,8 +13,6 @@ URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 #Patches from upstream.
-Patch0:        %{url}/commit/57c3b9e9b7a509e83eec03cf502d0a2e9ef5be41.patch#/Keep_proper_track_of_pending_closure_invalidations.patch
-Patch1:        %{url}/commit/e60360bcc147357c02c70553156d277a547612e8.patch#/Zero_out_new_ConnectData.patch
 
 BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -107,6 +105,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 09 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-1
+- update to 3.4.4 release
+
 * Sun Aug 06 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.3-4
 - Fix needsPostBarrier crash again (rhbz #1472008)
 - Drop build requires gnome-common
