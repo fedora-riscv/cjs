@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -11,6 +11,9 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+%if 0%{?rhel}
+Patch0:        old_pkconfig.patch
+%endif
 
 #Patches from upstream.
 
@@ -59,6 +62,9 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static \
+%if 0%{?rhel}
+           --without-dbus-tests \
+%endif
            --enable-installed-tests
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build V=1
@@ -105,6 +111,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 30 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-2
+- Add build fixes for epel7
+
 * Wed Aug 09 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-1
 - update to 3.4.4 release
 
