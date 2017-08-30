@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.4
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -13,6 +13,7 @@ URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 #Patches from upstream.
+Patch0:        cjs-3.4.4-regenerated_autotools.patch
 
 BuildRequires: pkgconfig(mozjs-38)
 BuildRequires: pkgconfig(cairo-gobject)
@@ -53,8 +54,15 @@ the functionality of the installed cjs package.
 
 
 %prep
-%autosetup -p1
+%autosetup -p 1
+
+# Get timestamps straight after patching.
+touch aclocal.m4 configure Makefile.am Makefile.in
+
+# Patch0 handles this on EPEL <=7.
+%if 0%{?fedora} || 0%{?rhel} >= 8
 NOCONFIGURE=1 ./autogen.sh
+%endif # 0%%{?fedora} || 0%%{?rhel} >= 8
 
 
 %build
@@ -105,6 +113,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Aug 30 2017 Björn Esser <besser82@fedoraproject.org> - 1:3.4.4-2
+- Add patch for regenerated autotools on EPEL
+
 * Wed Aug 09 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-1
 - update to 3.4.4 release
 
