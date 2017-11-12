@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       3.4.4
-Release:       3%{?dist}
+Release:       4%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -113,6 +113,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Sun Nov 12 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-4
+- rebuilt
+
 * Fri Sep 08 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-3
 - Fix needsPostBarrier crash again (rhbz #1472008)
 
