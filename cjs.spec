@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
-Version:       3.4.4
-Release:       4%{?dist}
+Version:       3.6.1
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -14,7 +14,6 @@ Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 %if 0%{?rhel}
 Patch0:        old_pkconfig.patch
 %endif
-Patch1:        %{url}/pull/53.patch#/upstream_fixes.patch
 
 #Patches from upstream.
 
@@ -113,8 +112,11 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
-* Sun Nov 12 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-4
-- rebuilt
+* Sat Nov 11 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.1-1
+- update to 3.6.1 release
+
+* Mon Oct 23 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.0-1
+- update to 3.6.0 release
 
 * Fri Sep 08 2017 Leigh Scott <leigh123linux@googlemail.com> - 1:3.4.4-3
 - Fix needsPostBarrier crash again (rhbz #1472008)
