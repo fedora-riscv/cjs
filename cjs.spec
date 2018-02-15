@@ -1,7 +1,11 @@
+%global commit  8aee7bb90431dc1d4cda0119986591f8274b574a
+%global date 20180122
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
+
 Name:          cjs
 Epoch:         1
-Version:       3.6.1
-Release:       2%{?dist}
+Version:       3.6.2
+Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -10,14 +14,14 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
-Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
 %if 0%{?rhel}
 Patch0:        old_pkconfig.patch
 %endif
 
 #Patches from upstream.
 
-BuildRequires: pkgconfig(mozjs-38)
+BuildRequires: pkgconfig(mozjs-52)
 BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
 BuildRequires: readline-devel
@@ -57,7 +61,7 @@ the functionality of the installed cjs package.
 
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n %{name}-%{commit}
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -82,10 +86,7 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 #make check
 
 
-%post -p /sbin/ldconfig
-
-
-%postun -p /sbin/ldconfig
+%ldconfig_scriptlets
 
 
 %files
@@ -112,6 +113,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Feb 15 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.2-0.1.20180122git8aee7bb
+- update to git snapshot
+
 * Wed Feb 07 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:3.6.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_28_Mass_Rebuild
 
