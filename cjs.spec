@@ -1,11 +1,11 @@
-%global commit  8aee7bb90431dc1d4cda0119986591f8274b574a
-%global date 20180122
+%global commit  5cfcbfdedf5622837241de7e82eded65658a46cc
+%global date 20180218
 %global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 
 Name:          cjs
 Epoch:         1
 Version:       3.6.2
-Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:       0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -113,6 +113,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Wed Feb 21 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.2-0.2.20180218git5cfcbfd
+- update to git snapshot
+
 * Thu Feb 15 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.2-0.1.20180122git8aee7bb
 - update to git snapshot
 
