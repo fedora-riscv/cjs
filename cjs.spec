@@ -1,11 +1,7 @@
-%global commit  5cfcbfdedf5622837241de7e82eded65658a46cc
-%global date 20180218
-%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
-
 Name:          cjs
 Epoch:         1
-Version:       3.6.2
-Release:       0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Version:       3.8.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -14,7 +10,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
-Source0:       %{url}/archive/%{commit}.tar.gz#/%{name}-%{commit}.tar.gz
+Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 %if 0%{?rhel}
 Patch0:        old_pkconfig.patch
 %endif
@@ -61,7 +57,7 @@ the functionality of the installed cjs package.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -p1
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -113,6 +109,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Apr 16 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:3.8.0-1
+- Update to 3.8.0 release
+
 * Wed Feb 21 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:3.6.2-0.2.20180218git5cfcbfd
 - update to git snapshot
 
