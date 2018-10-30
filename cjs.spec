@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
-Version:       3.8.0
-Release:       2%{?dist}
+Version:       4.0.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -11,9 +11,6 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-%if 0%{?rhel}
-Patch0:        old_pkconfig.patch
-%endif
 
 #Patches from upstream.
 
@@ -63,9 +60,6 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure --disable-static \
-%if 0%{?rhel}
-           --without-dbus-tests \
-%endif
            --enable-installed-tests
 sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 %make_build V=1
@@ -109,6 +103,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Oct 30 2018 Leigh Scott <leigh123linux@googlemail.com> - 1:4.0.0-1
+- Update to 4.0.0 release
+
 * Thu Jul 12 2018 Fedora Release Engineering <releng@fedoraproject.org> - 1:3.8.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
 
