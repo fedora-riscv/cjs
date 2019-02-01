@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       4.0.0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -13,22 +13,26 @@ URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 #Patches from upstream.
+Patch0:        %{url}/pull/73.patch#/code_coverage_fixes.patch
 
 BuildRequires: pkgconfig(mozjs-52)
 BuildRequires: pkgconfig(cairo-gobject)
-BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
-BuildRequires: readline-devel
 BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
 BuildRequires: pkgconfig(gtk+-3.0)
+BuildRequires: pkgconfig(gtk-doc)
+# Required for tests
+BuildRequires: autoconf-archive
+BuildRequires: dbus-daemon
+BuildRequires: gettext
 BuildRequires: gcc-c++
 BuildRequires: intltool
-# Require for checks
+# Required for checks
 #BuildRequires: dbus-x11
 #BuildRequires: xorg-x11-server-Xvfb
-# Bootstrap requirements
-BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: libtool
-BuildRequires: autoconf-archive
+BuildRequires: readline-devel
 
 %description
 Cjs allows using Cinnamon libraries from Javascript. It's based on the
@@ -59,9 +63,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure --disable-static \
-           --enable-installed-tests
-sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+%configure --disable-static --enable-installed-tests
 %make_build V=1
 
 
@@ -103,6 +105,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 01 2019 Leigh Scott <leigh123linux@googlemail.com> - 1:4.0.0-3
+- Fix build with newer autoconf-archive
+
 * Thu Jan 31 2019 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_30_Mass_Rebuild
 
