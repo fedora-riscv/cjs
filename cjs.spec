@@ -1,7 +1,7 @@
 Name:          cjs
 Epoch:         1
 Version:       4.0.0
-Release:       4%{?dist}
+Release:       5%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -105,6 +105,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Mon Feb 18 2019 Leigh Scott <leigh123linux@googlemail.com> - 1:4.0.0-5
+- Rebuild for possible mozjs52 fallout
+
 * Sun Feb 17 2019 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 1:4.0.0-4
 - Rebuild for readline 8.0
 
