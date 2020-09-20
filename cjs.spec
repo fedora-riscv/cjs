@@ -1,7 +1,17 @@
+	
+%global glib2_version 2.58.0
+%global gobject_introspection_version 1.61.2
+%global gtk3_version 3.20
+%if 0%{?fedora} >= 34
+%global mozjs78_version 78.2.0-1
+%else
+%global mozjs52_version 52.9.0-6
+%endif
+
 Name:          cjs
 Epoch:         1
 Version:       4.6.0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -13,24 +23,30 @@ URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 #Patches from upstream.
+Patch0:        0001-Port-to-1.66.0-using-the-hammer-approach.patch.tar.gz
 
-BuildRequires: pkgconfig(mozjs-52)
-BuildRequires: pkgconfig(cairo-gobject)
-BuildRequires: pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(gobject-introspection-1.0) >= 1.38.0
-BuildRequires: pkgconfig(gtk+-3.0)
-BuildRequires: pkgconfig(gtk-doc)
-# Required for tests
+%if 0%{?fedora} >= 34
+BuildRequires: pkgconfig(mozjs-78) >= %{mozjs78_version}
+BuildRequires: meson
+BuildRequires: sysprof-devel
+%else
+BuildRequires: pkgconfig(mozjs-52) >= %{mozjs52_version}
+BuildRequires: intltool
+BuildRequires: libtool
 BuildRequires: autoconf-archive
+%endif
+BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: dbus-daemon
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(glib-2.0) >= %{glib2_version}
+BuildRequires: pkgconfig(gobject-introspection-1.0) >= %{gobject_introspection_version}
+BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
+BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: gettext
 BuildRequires: gcc-c++
-BuildRequires: intltool
 # Required for checks
 #BuildRequires: dbus-x11
 #BuildRequires: xorg-x11-server-Xvfb
-BuildRequires: libtool
 BuildRequires: readline-devel
 
 %description
@@ -49,7 +65,7 @@ Files for development with %{name}.
 
 %package tests
 Summary: Tests for the cjs package
-Requires: %{name}-devel%{?_isa} = %{?epoch}:%{version}-%{release}
+Requires: %{name}%{?_isa} = %{?epoch}:%{version}-%{release}
 
 %description tests
 The cjs-tests package contains tests that can be used to verify
@@ -57,17 +73,29 @@ the functionality of the installed cjs package.
 
 
 %prep
-%autosetup -p1
-NOCONFIGURE=1 ./autogen.sh
+%setup -q
+%if 0%{?fedora} >= 34
+%patch0 -p1
+%endif
 
 
 %build
+%if 0%{?fedora} >= 34
+%meson --libexecdir=%{_libexecdir}/cjs/ \
+%meson_build
+%else
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static --enable-installed-tests
 %make_build V=1
+%endif
 
 
 %install
+%if 0%{?fedora} >= 34
+%meson_install
+%else
 %make_install
+%endif
 
 #Remove libtool archives.
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
@@ -87,7 +115,6 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_bindir}/cjs-console
 %{_libdir}/*.so.*
 %{_libdir}/cjs/
-%exclude %{_libdir}/cjs/*.so
 
 
 %files devel
@@ -95,15 +122,23 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/cjs-1.0/
 %{_libdir}/pkgconfig/cjs-*1.0.pc
 %{_libdir}/*.so
-%{_libdir}/cjs/*.so
+%if 0%{?fedora} >= 34
+%{_datadir}/cjs-1.0/
+%endif
 
 
 %files tests
 %{_libexecdir}/cjs/
 %{_datadir}/installed-tests/
+%if 0%{?fedora} >= 34
+%{_datadir}/glib-2.0/schemas/org.cinnamon.CjsTest.gschema.xml
+%endif
 
 
 %changelog
+* Sun Sep 20 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.6.0-3
+- Use mozjs78 for f34+
+
 * Mon Jul 27 2020 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
 
