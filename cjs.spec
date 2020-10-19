@@ -1,17 +1,16 @@
+%global commit  befc11adb5ba10681464e6fa81b1a79f108ce61c
+%global date 20201019
+%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
 	
 %global glib2_version 2.58.0
 %global gobject_introspection_version 1.61.2
 %global gtk3_version 3.20
-%if 0%{?fedora} >= 34
 %global mozjs78_version 78.2.0-1
-%else
-%global mozjs52_version 52.9.0-6
-%endif
 
 Name:          cjs
 Epoch:         1
-Version:       4.6.0
-Release:       3%{?dist}
+Version:       4.7.0
+Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -20,21 +19,11 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
-Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:       %{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
 
-#Patches from upstream.
-Patch0:        0001-Port-to-1.66.0-using-the-hammer-approach.patch.tar.gz
-
-%if 0%{?fedora} >= 34
 BuildRequires: pkgconfig(mozjs-78) >= %{mozjs78_version}
 BuildRequires: meson
-BuildRequires: sysprof-devel
-%else
-BuildRequires: pkgconfig(mozjs-52) >= %{mozjs52_version}
-BuildRequires: intltool
-BuildRequires: libtool
-BuildRequires: autoconf-archive
-%endif
+BuildRequires: pkgconfig(sysprof-capture-4)
 BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: dbus-daemon
 BuildRequires: pkgconfig(dbus-glib-1)
@@ -45,9 +34,11 @@ BuildRequires: pkgconfig(gtk-doc)
 BuildRequires: gettext
 BuildRequires: gcc-c++
 # Required for checks
-#BuildRequires: dbus-x11
-#BuildRequires: xorg-x11-server-Xvfb
-BuildRequires: readline-devel
+%ifnarch s390 s390x
+BuildRequires: dbus-x11
+BuildRequires: xorg-x11-server-Xvfb
+%endif
+BuildRequires: pkgconfig(readline)
 
 %description
 Cjs allows using Cinnamon libraries from Javascript. It's based on the
@@ -73,39 +64,23 @@ the functionality of the installed cjs package.
 
 
 %prep
-%setup -q
-%if 0%{?fedora} >= 34
-%patch0 -p1
-%endif
+%autosetup -p1 -n %{name}-%{commit}
 
 
 %build
-%if 0%{?fedora} >= 34
-%meson --libexecdir=%{_libexecdir}/cjs/ \
+%meson --libexecdir=%{_libexecdir}/cjs/ 
 %meson_build
-%else
-NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static --enable-installed-tests
-%make_build V=1
-%endif
 
 
 %install
-%if 0%{?fedora} >= 34
 %meson_install
-%else
-%make_install
-%endif
-
-#Remove libtool archives.
-find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %check
-#make check
-
-
-%ldconfig_scriptlets
+%ifnarch s390 s390x
+xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
+ --num-processes %{_smp_build_ncpus} --print-errorlogs
+%endif
 
 
 %files
@@ -122,20 +97,19 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_includedir}/cjs-1.0/
 %{_libdir}/pkgconfig/cjs-*1.0.pc
 %{_libdir}/*.so
-%if 0%{?fedora} >= 34
 %{_datadir}/cjs-1.0/
-%endif
 
 
 %files tests
 %{_libexecdir}/cjs/
 %{_datadir}/installed-tests/
-%if 0%{?fedora} >= 34
 %{_datadir}/glib-2.0/schemas/org.cinnamon.CjsTest.gschema.xml
-%endif
 
 
 %changelog
+* Mon Oct 19 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.7.0-0.1.20201019git974a99b
+- update to git snapshot
+
 * Sun Sep 20 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.6.0-3
 - Use mozjs78 for f34+
 
