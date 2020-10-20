@@ -5,12 +5,12 @@
 %global glib2_version 2.58.0
 %global gobject_introspection_version 1.61.2
 %global gtk3_version 3.20
-%global mozjs78_version 78.2.0-1
+%global mozjs78_version 78.4.0-1
 
 Name:          cjs
 Epoch:         1
 Version:       4.7.0
-Release:       0.1%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:       0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -21,24 +21,27 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
 
-BuildRequires: pkgconfig(mozjs-78) >= %{mozjs78_version}
-BuildRequires: meson
-BuildRequires: pkgconfig(sysprof-capture-4)
-BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: dbus-daemon
+BuildRequires: gcc-c++
+BuildRequires: meson
+BuildRequires: pkgconfig(cairo-gobject)
 BuildRequires: pkgconfig(dbus-glib-1)
 BuildRequires: pkgconfig(glib-2.0) >= %{glib2_version}
 BuildRequires: pkgconfig(gobject-introspection-1.0) >= %{gobject_introspection_version}
 BuildRequires: pkgconfig(gtk+-3.0) >= %{gtk3_version}
-BuildRequires: pkgconfig(gtk-doc)
-BuildRequires: gettext
-BuildRequires: gcc-c++
+BuildRequires: pkgconfig(mozjs-78) >= %{mozjs78_version}
+BuildRequires: pkgconfig(readline)
+BuildRequires: pkgconfig(sysprof-capture-4)
 # Required for checks
 %ifnarch s390 s390x
 BuildRequires: dbus-x11
 BuildRequires: xorg-x11-server-Xvfb
 %endif
-BuildRequires: pkgconfig(readline)
+
+Requires: glib2%{?_isa} >= %{glib2_version}
+Requires: gobject-introspection%{?_isa} >= %{gobject_introspection_version}
+Requires: gtk3%{?_isa} >= %{gtk3_version}
+Requires: mozjs78%{?_isa} >= %{mozjs78_version}
 
 %description
 Cjs allows using Cinnamon libraries from Javascript. It's based on the
@@ -107,6 +110,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Tue Oct 20 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.7.0-0.2.20201019gitbefc11a
+- Rebuild against mozjs78-78.4.0-1
+
 * Mon Oct 19 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.7.0-0.1.20201019git974a99b
 - update to git snapshot
 
