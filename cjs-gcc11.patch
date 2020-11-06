@@ -1,0 +1,13 @@
+diff --git a/cjs/error-types.cpp b/cjs/error-types.cpp
+index ab91ac1..d2d41ef 100644
+--- a/cjs/error-types.cpp
++++ b/cjs/error-types.cpp
+@@ -31,7 +31,7 @@ G_DEFINE_QUARK(gjs-js-error-quark, gjs_js_error)
+ // clang-format on
+ 
+ GType gjs_js_error_get_type(void) {
+-    static volatile GType g_type_id;
++    static GType g_type_id;
+ 
+     if (g_once_init_enter(&g_type_id)) {
+         static GEnumValue errors[] = {

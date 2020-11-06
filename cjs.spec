@@ -10,7 +10,7 @@
 Name:          cjs
 Epoch:         1
 Version:       4.7.0
-Release:       0.2%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Release:       0.3%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -20,6 +20,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
+Patch0:        %{name}-gcc11.patch
 
 BuildRequires: dbus-daemon
 BuildRequires: gcc-c++
@@ -110,6 +111,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri Nov 06 2020 Jeff Law <law@redhat.com> - 1:4.7.0-0.3.20201019gitbefc11a
+- Fix bogus volatile caught by gcc-11
+
 * Tue Oct 20 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.7.0-0.2.20201019gitbefc11a
 - Rebuild against mozjs78-78.4.0-1
 
