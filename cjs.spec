@@ -1,7 +1,3 @@
-%global commit  befc11adb5ba10681464e6fa81b1a79f108ce61c
-%global date 20201019
-%global shortcommit0 %(c=%{commit}; echo ${c:0:7})
-	
 %global glib2_version 2.58.0
 %global gobject_introspection_version 1.61.2
 %global gtk3_version 3.20
@@ -9,8 +5,8 @@
 
 Name:          cjs
 Epoch:         1
-Version:       4.7.0
-Release:       0.3%{?shortcommit0:.%{date}git%{shortcommit0}}%{?dist}
+Version:       4.8.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -19,7 +15,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # The console module (modules/console.c)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
-Source0:       %{url}/archive/%{commit}/%{name}-%{commit}.tar.gz
+Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 Patch0:        %{name}-gcc11.patch
 
 BuildRequires: dbus-daemon
@@ -68,7 +64,7 @@ the functionality of the installed cjs package.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{commit}
+%autosetup -p1
 
 
 %build
@@ -111,6 +107,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Wed Nov 25 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.8.0-1
+- Update to 4.8.0 release
+
 * Fri Nov 06 2020 Jeff Law <law@redhat.com> - 1:4.7.0-0.3.20201019gitbefc11a
 - Fix bogus volatile caught by gcc-11
 
