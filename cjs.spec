@@ -5,7 +5,7 @@
 
 Name:          cjs
 Epoch:         1
-Version:       4.8.1
+Version:       4.8.2
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -106,6 +106,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Tue Jan 12 2021 Leigh Scott <leigh123linux@gmail.com> - 1:4.8.2-1
+- Update to 4.8.2 release
+
 * Tue Dec  8 2020 Leigh Scott <leigh123linux@gmail.com> - 1:4.8.1-1
 - Update to 4.8.1 release
 
