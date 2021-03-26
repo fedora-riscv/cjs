@@ -6,7 +6,7 @@
 Name:          cjs
 Epoch:         1
 Version:       4.8.2
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -106,6 +106,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri Mar 26 2021 Kalev Lember <klember@redhat.com> - 1:4.8.2-3
+- Rebuild to fix sysprof-capture symbols leaking into libraries consuming it
+
 * Tue Jan 26 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1:4.8.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 
