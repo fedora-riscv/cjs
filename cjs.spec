@@ -5,8 +5,8 @@
 
 Name:          cjs
 Epoch:         1
-Version:       4.8.2
-Release:       3%{?dist}
+Version:       5.0.0
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -106,6 +106,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri May 28 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.0.0-1
+- Update to 5.0.0 release
+
 * Fri Mar 26 2021 Kalev Lember <klember@redhat.com> - 1:4.8.2-3
 - Rebuild to fix sysprof-capture symbols leaking into libraries consuming it
 
