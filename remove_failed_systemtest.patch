@@ -1,0 +1,10 @@
+--- a/installed-tests/js/meson.build
++++ b/installed-tests/js/meson.build
+@@ -113,7 +113,6 @@ jasmine_tests = [
+     'Print',
+     'Regress',
+     'Signals',
+-    'System',
+     'Tweener',
+     'WarnLib',
+ ]

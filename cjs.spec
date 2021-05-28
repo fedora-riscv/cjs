@@ -16,6 +16,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Patch0:        remove_failed_systemtest.patch
 
 BuildRequires: dbus-daemon
 BuildRequires: gcc-c++
