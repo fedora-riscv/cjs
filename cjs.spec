@@ -1,12 +1,12 @@
 %global glib2_version 2.58.0
 %global gobject_introspection_version 1.61.2
 %global gtk3_version 3.20
-%global mozjs78_version 78.4.0-1
+%global mozjs78_version 78.12.0-1
 
 Name:          cjs
 Epoch:         1
 Version:       5.0.0
-Release:       1%{?dist}
+Release:       2%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -16,7 +16,7 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-Patch0:        remove_failed_systemtest.patch
+Patch0:        %{url}/commit/ac2737f.patch#/fix_systemtest.patch
 
 BuildRequires: dbus-daemon
 BuildRequires: gcc-c++
@@ -107,6 +107,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Thu Jul 15 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.0.0-2
+- Rebuild against mozjs78-78.12.0-1
+
 * Fri May 28 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.0.0-1
 - Update to 5.0.0 release
 
