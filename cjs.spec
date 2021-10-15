@@ -5,8 +5,8 @@
 
 Name:          cjs
 Epoch:         1
-Version:       5.0.0
-Release:       3%{?dist}
+Version:       5.0.1
+Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -16,7 +16,6 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-Patch0:        %{url}/commit/ac2737f.patch#/fix_systemtest.patch
 
 BuildRequires: dbus-daemon
 BuildRequires: gcc-c++
@@ -107,6 +106,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri Oct 15 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.0.1-1
+- Update to 5.0.1 release
+
 * Wed Jul 21 2021 Fedora Release Engineering <releng@fedoraproject.org> - 1:5.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 
