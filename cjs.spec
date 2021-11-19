@@ -5,7 +5,7 @@
 
 Name:          cjs
 Epoch:         1
-Version:       5.0.1
+Version:       5.2.0
 Release:       1%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
@@ -16,6 +16,8 @@ License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 # Stack printer (gjs/stack.c)
 URL:           https://github.com/linuxmint/%{name}
 Source0:       %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+
+ExcludeArch:   %{ix86}
 
 BuildRequires: dbus-daemon
 BuildRequires: gcc-c++
@@ -106,6 +108,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri Nov 19 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.2.0-1
+- Update to 5.2.0 release
+
 * Fri Oct 15 2021 Leigh Scott <leigh123linux@gmail.com> - 1:5.0.1-1
 - Update to 5.0.1 release
 
