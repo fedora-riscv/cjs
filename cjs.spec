@@ -6,7 +6,7 @@
 Name:          cjs
 Epoch:         1
 Version:       5.2.0
-Release:       2%{?dist}
+Release:       3%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -108,6 +108,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Wed Jan 19 2022 Fedora Release Engineering <releng@fedoraproject.org> - 1:5.2.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_36_Mass_Rebuild
+
 * Sat Jan 08 2022 Miro Hrončok <mhroncok@redhat.com> - 1:5.2.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Changes/LIBFFI34
 
