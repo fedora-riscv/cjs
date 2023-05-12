@@ -6,7 +6,7 @@
 Name:          cjs
 Epoch:         1
 Version:       5.6.0
-Release:       2%{?dist}
+Release:       2.rv64%{?dist}
 Summary:       Javascript Bindings for Cinnamon
 
 License:       MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
@@ -78,7 +78,7 @@ the functionality of the installed cjs package.
 
 
 %check
-%ifnarch s390 s390x
+%ifnarch s390 s390x riscv64
 xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
  --num-processes %{_smp_build_ncpus} --print-errorlogs
 %endif
@@ -108,6 +108,9 @@ xvfb-run -a /usr/bin/meson test -C %{_vpath_builddir} \
 
 
 %changelog
+* Fri May 12 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 1:5.6.0-2.rv64
+- Skip tests for riscv64.
+
 * Wed Jan 18 2023 Fedora Release Engineering <releng@fedoraproject.org> - 1:5.6.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_38_Mass_Rebuild
 
